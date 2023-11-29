@@ -1,10 +1,18 @@
-import Editor from "@monaco-editor/react";
 import { useRef, useState } from "react";
-import Navbar from "../components/Navbar";
+// import Navbar from "../components/Navbar";
 
-import LeftAlert from "../components/LeftAlert";
-import DynamicTable from "../components/DynamicTable";
-import Buttons from "../components/Buttons";
+// import LeftAlert from "../components/LeftAlert";
+// import DynamicTable from "../components/DynamicTable";
+// import Buttons from "../components/Buttons";
+import React, { lazy, Suspense } from "react";
+
+// Lazy-loaded components
+const Editor = lazy(() => import("@monaco-editor/react"));
+
+const Navbar = lazy(() => import("../components/Navbar"));
+const LeftAlert = lazy(() => import("../components/LeftAlert"));
+const DynamicTable = lazy(() => import("../components/DynamicTable"));
+const Buttons = lazy(() => import("../components/Buttons"));
 
 export default function Home() {
   const editorRef = useRef(null);
@@ -93,7 +101,7 @@ export default function Home() {
   const jsonData = require("../Tables/" + table);
   return (
     <div className="">
-      <div className="flex flex-col bg-gray-300 dark:bg-black h-screen">
+      <div className="flex flex-col bg-gray-300 dark:bg-black max-h-full ">
         {copyalert && <LeftAlert />}
         <nav>
           <Navbar />
