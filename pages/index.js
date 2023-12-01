@@ -7,7 +7,7 @@ import { useRef, useState, useEffect } from "react";
 import React, { lazy, Suspense } from "react";
 import Head from "next/head";
 
-const TableModal = lazy(() => import("../components/TableModal"));
+import TableModal from "../components/TableModal";
 const TableInfo = lazy(() => import("../components/TableInfo"));
 
 const Editor = lazy(() => import("@monaco-editor/react"));
@@ -217,7 +217,7 @@ export default function Home() {
                   loading={loading}
                   isFullscreen={isFullscreen}
                   infoModal={infoModal}
-                  handleChangeTable={() => handleChangeTable()}
+                  handleChangeTable={handleChangeTable}
                 />
               </div>
               <div className="flex flex-row">
