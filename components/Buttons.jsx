@@ -59,7 +59,7 @@ function Buttons({
       {isFullscreen && (
         <div className={`flex pl-[950px] flex-row gap-5 pb-2`}>
           <button
-            onClick={handleChangeTable}
+            onClick={() => handleChangeTable()}
             className="dark:text-white text-black p-3  hover:text-gray-700 shadow-lg hover:shadow-cyan-500 hover:shadow-md border rounded-lg"
             id="changeTableButton"
           >

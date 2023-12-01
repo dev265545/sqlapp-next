@@ -16,6 +16,19 @@ const LeftAlert = lazy(() => import("../components/LeftAlert"));
 const DynamicTable = lazy(() => import("../components/DynamicTable"));
 const Buttons = lazy(() => import("../components/Buttons"));
 export default function Home() {
+  const editorRef = useRef(null);
+  const [query, setQuery] = useState(null);
+  const [dropdown, setDropDown] = useState(false);
+  const [copyalert, setCopyAlert] = useState(false);
+  const [width, setWidth] = useState(90);
+  const [height, setHeight] = useState(40);
+  const [themeset, setThemeset] = useState("vs-dark");
+  const [tableLoading, setTableLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [table, setTable] = useState("customers.json");
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [fileName, setFileName] = useState("customers");
+  const filenamdata = ["customers", "orders", "ordersdetails"];
   const files = {
     customers: {
       name: "customers.sql",
@@ -43,25 +56,12 @@ export default function Home() {
       json: "order-details.json",
     },
   };
-  const editorRef = useRef(null);
-  const [query, setQuery] = useState(null);
-  const [dropdown, setDropDown] = useState(false);
-  const [copyalert, setCopyAlert] = useState(false);
-  const [width, setWidth] = useState(90);
-  const [height, setHeight] = useState(40);
-  const [themeset, setThemeset] = useState("vs-dark");
-  const [tableLoading, setTableLoading] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [table, setTable] = useState("customers.json");
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [fileName, setFileName] = useState("customers");
+
   const [file, setFile] = useState(files[fileName]);
   const initalData = require("../Tables/" + table);
   const [jsonData, setJsonData] = useState(initalData);
   const [info, setInfo] = useState(false);
   const [selecttable, setSelectTable] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(true);
-
   const handleChangeTable = () => {
     setSelectTable(!selecttable);
   };
@@ -171,6 +171,7 @@ export default function Home() {
   //   // Cleanup the interval on component unmount
   //   return () => clearInterval(intervalId);
   // });
+  const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -184,7 +185,7 @@ export default function Home() {
     <div className="dark bg-black max-h-screen">
       <Head>
         <title>Atlan-SQLapp</title>
-        <meta name="description" content="Atlan Sql app" />
+        <meta name="description" content="Atlan Sqlapp" />
       </Head>
       {initialLoading && (
         <div className="flex items-center justify-center h-screen">
@@ -216,7 +217,7 @@ export default function Home() {
                   loading={loading}
                   isFullscreen={isFullscreen}
                   infoModal={infoModal}
-                  handleChangeTable={handleChangeTable}
+                  handleChangeTable={() => handleChangeTable()}
                 />
               </div>
               <div className="flex flex-row">
@@ -295,10 +296,10 @@ export default function Home() {
           {dropdown && !isFullscreen && (
             <div
               id="dropdown"
-              className={`z-10 absolute top-28  left-[500px]  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-black`}
+              class={`z-10 absolute top-28  left-[500px]  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-black`}
             >
               <ul
-                className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                class="py-2 text-sm text-gray-700 dark:text-gray-200"
                 aria-labelledby="dropdownDefaultButton"
               >
                 <li
@@ -308,7 +309,7 @@ export default function Home() {
                   }}
                   className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  <button className="block px-4 py-2  ">Copy All</button>
+                  <button class="block px-4 py-2  ">Copy All</button>
                 </li>
                 <li
                   onClick={() => {
@@ -316,7 +317,7 @@ export default function Home() {
                   }}
                   className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  <button className="block px-4 py-2 ">Clear</button>
+                  <button class="block px-4 py-2 ">Clear</button>
                 </li>
               </ul>
             </div>
@@ -324,10 +325,10 @@ export default function Home() {
           {dropdown && isFullscreen && (
             <div
               id="dropdown"
-              className={`z-10 absolute top-28  left-[1300px]  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-black`}
+              class={`z-10 absolute top-28  left-[1300px]  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-black`}
             >
               <ul
-                className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                class="py-2 text-sm text-gray-700 dark:text-gray-200"
                 aria-labelledby="dropdownDefaultButton"
               >
                 <li
@@ -337,7 +338,7 @@ export default function Home() {
                   }}
                   className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  <button className="block px-4 py-2  ">Copy All</button>
+                  <button class="block px-4 py-2  ">Copy All</button>
                 </li>
                 <li
                   onClick={() => {
@@ -345,7 +346,7 @@ export default function Home() {
                   }}
                   className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  <button className="block px-4 py-2 ">Clear</button>
+                  <button class="block px-4 py-2 ">Clear</button>
                 </li>
               </ul>
             </div>
@@ -355,7 +356,7 @@ export default function Home() {
               <div className="flex items-center justify-center p-20">
                 {" "}
                 <div
-                  className="w-12 h-12 rounded-full animate-spin
+                  class="w-12 h-12 rounded-full animate-spin
                     border-8 border-solid border-cyan-500 border-t-transparent shadow-md"
                 ></div>
               </div>
