@@ -5,29 +5,17 @@ import { useRef, useState, useEffect } from "react";
 // import DynamicTable from "../components/DynamicTable";
 // import Buttons from "../components/Buttons";
 import React, { lazy, Suspense } from "react";
+import Head from "next/head";
 
 const TableModal = lazy(() => import("../components/TableModal"));
 const TableInfo = lazy(() => import("../components/TableInfo"));
-const DropDown = lazy(() => import("../components/DropDown"));
+
 const Editor = lazy(() => import("@monaco-editor/react"));
 const Navbar = lazy(() => import("../components/Navbar"));
 const LeftAlert = lazy(() => import("../components/LeftAlert"));
 const DynamicTable = lazy(() => import("../components/DynamicTable"));
 const Buttons = lazy(() => import("../components/Buttons"));
 export default function Home() {
-  const editorRef = useRef(null);
-  const [query, setQuery] = useState(null);
-  const [dropdown, setDropDown] = useState(false);
-  const [copyalert, setCopyAlert] = useState(false);
-  const [width, setWidth] = useState(90);
-  const [height, setHeight] = useState(40);
-  const [themeset, setThemeset] = useState("vs-dark");
-  const [tableLoading, setTableLoading] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [table, setTable] = useState("customers.json");
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [fileName, setFileName] = useState("customers");
-  const filenamdata = ["customers", "orders", "ordersdetails"];
   const files = {
     customers: {
       name: "customers.sql",
@@ -55,12 +43,25 @@ export default function Home() {
       json: "order-details.json",
     },
   };
-
+  const editorRef = useRef(null);
+  const [query, setQuery] = useState(null);
+  const [dropdown, setDropDown] = useState(false);
+  const [copyalert, setCopyAlert] = useState(false);
+  const [width, setWidth] = useState(90);
+  const [height, setHeight] = useState(40);
+  const [themeset, setThemeset] = useState("vs-dark");
+  const [tableLoading, setTableLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [table, setTable] = useState("customers.json");
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [fileName, setFileName] = useState("customers");
   const [file, setFile] = useState(files[fileName]);
   const initalData = require("../Tables/" + table);
   const [jsonData, setJsonData] = useState(initalData);
   const [info, setInfo] = useState(false);
   const [selecttable, setSelectTable] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
+
   const handleChangeTable = () => {
     setSelectTable(!selecttable);
   };
@@ -170,7 +171,6 @@ export default function Home() {
   //   // Cleanup the interval on component unmount
   //   return () => clearInterval(intervalId);
   // });
-  const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -182,6 +182,10 @@ export default function Home() {
 
   return (
     <div className="dark bg-black max-h-screen">
+      <Head>
+        <title>Atlan-SQLapp</title>
+        <meta name="description" content="Atlan Sql app" />
+      </Head>
       {initialLoading && (
         <div className="flex items-center justify-center h-screen">
           <div className="w-12 h-12 rounded-full animate-spin border-8 border-solid border-cyan-500 border-t-transparent shadow-md"></div>
