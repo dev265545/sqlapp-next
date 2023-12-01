@@ -295,10 +295,10 @@ export default function Home() {
           {dropdown && !isFullscreen && (
             <div
               id="dropdown"
-              class={`z-10 absolute top-28  left-[500px]  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-black`}
+              className={`z-10 absolute top-28  left-[500px]  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-black`}
             >
               <ul
-                class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                className="py-2 text-sm text-gray-700 dark:text-gray-200"
                 aria-labelledby="dropdownDefaultButton"
               >
                 <li
@@ -308,7 +308,7 @@ export default function Home() {
                   }}
                   className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  <button class="block px-4 py-2  ">Copy All</button>
+                  <button className="block px-4 py-2  ">Copy All</button>
                 </li>
                 <li
                   onClick={() => {
@@ -316,7 +316,7 @@ export default function Home() {
                   }}
                   className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  <button class="block px-4 py-2 ">Clear</button>
+                  <button className="block px-4 py-2 ">Clear</button>
                 </li>
               </ul>
             </div>
@@ -324,10 +324,10 @@ export default function Home() {
           {dropdown && isFullscreen && (
             <div
               id="dropdown"
-              class={`z-10 absolute top-28  left-[1300px]  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-black`}
+              className={`z-10 absolute top-28  left-[1300px]  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-black`}
             >
               <ul
-                class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                className="py-2 text-sm text-gray-700 dark:text-gray-200"
                 aria-labelledby="dropdownDefaultButton"
               >
                 <li
@@ -337,7 +337,7 @@ export default function Home() {
                   }}
                   className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  <button class="block px-4 py-2  ">Copy All</button>
+                  <button className="block px-4 py-2  ">Copy All</button>
                 </li>
                 <li
                   onClick={() => {
@@ -345,7 +345,7 @@ export default function Home() {
                   }}
                   className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  <button class="block px-4 py-2 ">Clear</button>
+                  <button className="block px-4 py-2 ">Clear</button>
                 </li>
               </ul>
             </div>
@@ -355,7 +355,7 @@ export default function Home() {
               <div className="flex items-center justify-center p-20">
                 {" "}
                 <div
-                  class="w-12 h-12 rounded-full animate-spin
+                  className="w-12 h-12 rounded-full animate-spin
                     border-8 border-solid border-cyan-500 border-t-transparent shadow-md"
                 ></div>
               </div>

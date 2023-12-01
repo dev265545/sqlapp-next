@@ -6,10 +6,10 @@ function DropDown({ isFullscreen, handleCopyClick, handleClearAll }) {
       {!isFullscreen && (
         <div
           id="dropdown"
-          class={`z-10 absolute top-28  left-[500px]  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-black`}
+          className={`z-10 absolute top-28  left-[500px]  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-black`}
         >
           <ul
-            class="py-2 text-sm text-gray-700 dark:text-gray-200"
+            className="py-2 text-sm text-gray-700 dark:text-gray-200"
             aria-labelledby="dropdownDefaultButton"
           >
             <li
@@ -18,7 +18,7 @@ function DropDown({ isFullscreen, handleCopyClick, handleClearAll }) {
               }}
               className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >
-              <button class="block px-4 py-2  ">Copy All</button>
+              <button className="block px-4 py-2  ">Copy All</button>
             </li>
             <li
               onClick={() => {
@@ -26,7 +26,7 @@ function DropDown({ isFullscreen, handleCopyClick, handleClearAll }) {
               }}
               className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >
-              <button class="block px-4 py-2 ">Clear</button>
+              <button className="block px-4 py-2 ">Clear</button>
             </li>
           </ul>
         </div>
@@ -34,10 +34,10 @@ function DropDown({ isFullscreen, handleCopyClick, handleClearAll }) {
       {isFullscreen && (
         <div
           id="dropdown"
-          class={`z-10 absolute top-28  left-[1300px]  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-black`}
+          className={`z-10 absolute top-28  left-[1300px]  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-black`}
         >
           <ul
-            class="py-2 text-sm text-gray-700 dark:text-gray-200"
+            className="py-2 text-sm text-gray-700 dark:text-gray-200"
             aria-labelledby="dropdownDefaultButton"
           >
             <li
@@ -46,7 +46,7 @@ function DropDown({ isFullscreen, handleCopyClick, handleClearAll }) {
               }}
               className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >
-              <button class="block px-4 py-2  ">Copy All</button>
+              <button className="block px-4 py-2  ">Copy All</button>
             </li>
             <li
               onClick={() => {
@@ -54,7 +54,7 @@ function DropDown({ isFullscreen, handleCopyClick, handleClearAll }) {
               }}
               className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >
-              <button class="block px-4 py-2 ">Clear</button>
+              <button className="block px-4 py-2 ">Clear</button>
             </li>
           </ul>
         </div>
