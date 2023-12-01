@@ -46,8 +46,19 @@ next-themes: Version 0.2.1, for handling theme switching in Next.js.
 react: Version 18.2.0, the core React library.
 react-dom: Version 18.2.0, for rendering React components.
 react-icons: Version 4.12.0, a library for popular icons.
+
+What all is in this app ?
+We have the monaco editor to write your sql queries you can have the dark or light mode in the editor.
+The editor provides the same functionality as vsCode editor. As this was a dummy application the queries are not actually functional.
+
+Given 3 different as examples which you can select from, using this editor you can switch between theses 3 tables and your input will also be saved.
+
+You can copy all and clear all
+
+Provided the table schema for all the tables so the users can have a better understanding of the tables.
+
 Page Load Time
-The page load time of the application was not explicitly measured in the provided code. To implement this measurement, consider using browser developer tools or performance monitoring tools to analyze the application's loading performance.
+I have included the lighthouse runs to show case the pageloadtime and other metrics like best practices seo and accessibility
 
 Optimizations
 The code includes various features and optimizations, such as lazy loading of components using React's lazy and Suspense, asynchronous execution simulation for SQL queries, and theme selection. Additionally, there are loading indicators for both the editor and dynamic table to provide a smoother user experience.
