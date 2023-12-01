@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from "react";
 // import DynamicTable from "../components/DynamicTable";
 // import Buttons from "../components/Buttons";
 import React, { lazy, Suspense } from "react";
+import TableModal from "../components/TableModal";
 const TableInfo = lazy(() => import("../components/TableInfo"));
 const DropDown = lazy(() => import("../components/DropDown"));
 
@@ -34,19 +35,26 @@ export default function Home() {
     customers: {
       name: "customers.sql",
       language: "sql",
-      value: "customers.json",
+      value: `SELECT * FROM customers
+    /* SELECT FROM WHERE GROUP BY HAVING ORDER BY INSERT 
+      INTO VALUES UPDATE SET DELETE JOIN INNER LEFT RIGHT OUTER
+       ON AS DISTINCT AND OR NOT IN BETWEEN LIKE IS NULL AS COUNT
+        AVG SUM MAX MIN DISTINCT INNER JOIN LEFT JOIN RIGHT JOIN FULL
+         JOIN WHERE ORDER BY GROUP BY HAVING ASC DESC LIMIT OFFSET; 
+         */`,
       json: "customers.json",
     },
     orders: {
       name: "orders.sql",
       language: "sql",
-      value: "orders.json",
+      value: "SELECT * FROM orders",
       json: "orders.json",
     },
     ordersdetails: {
       name: "ordersdetails.sql",
       language: "sql",
-      value: "Some sql string details",
+      value:
+        "Select * from ordersdetails SELECT FROM WHERE GROUP BY HAVING ORDER BY INSERT INTO VALUES UPDATE SET DELETE JOIN INNER LEFT RIGHT OUTER ON AS DISTINCT AND OR NOT IN BETWEEN LIKE IS NULL AS COUNT AVG SUM MAX MIN DISTINCT INNER JOIN LEFT JOIN RIGHT JOIN FULL JOIN WHERE ORDER BY GROUP BY HAVING ASC DESC LIMIT OFFSET;",
       json: "order-details.json",
     },
   };
@@ -54,6 +62,11 @@ export default function Home() {
   const [file, setFile] = useState(files[fileName]);
   const initalData = require("../Tables/" + table);
   const [jsonData, setJsonData] = useState(initalData);
+  const [info, setInfo] = useState(false);
+  const [selecttable, setSelectTable] = useState(false);
+  const handleChangeTable = () => {
+    setSelectTable(!selecttable);
+  };
 
   console.log(file);
   console.log(fileName);
@@ -86,6 +99,9 @@ export default function Home() {
     console.log("f");
   }, [jsonData]);
 
+  const infoModal = () => {
+    setInfo(!info);
+  };
   const handleRunSql = async () => {
     setLoading(true);
     setQuery(editorRef.current.getValue());
@@ -128,21 +144,39 @@ export default function Home() {
     editorRef.current = editor;
   }
   const handleCopyClick = () => {
+    showValue();
     setQuery(editorRef.current.getValue());
+
     console.log(query);
-    navigator.clipboard.writeText(query);
+    navigator.clipboard.writeText(editorRef.current.getValue());
     console.log("Copy clicked");
-    setCopyAlert(true);
+    // setCopyAlert(true);
     setTimeout(() => {
-      setCopyAlert(false);
-    }, 3000);
+      setQuery(editorRef.current.getValue());
+      navigator.clipboard.writeText(editorRef.current.getValue());
+      console.log("Copy clicked");
+    }, 100);
   };
   const handleClearAll = () => {
     editorRef.current.setValue("");
+    files[fileName].value = "";
   };
   function showValue() {
-    setQuery(editorRef.current.getValue());
+    if (!editorRef.current) {
+      setQuery(editorRef?.current?.getValue());
+      console.log(query);
+    }
   }
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     // Your logic to run every 2 seconds
+  //     // For example, you can call your function here
+  //     showValue();
+  //   }, 200); // 2000 milliseconds = 2 seconds
+
+  //   // Cleanup the interval on component unmount
+  //   return () => clearInterval(intervalId);
+  // });
   const [initialLoading, setInitialLoading] = useState(true);
 
   // ... (other state variables)
@@ -170,7 +204,7 @@ export default function Home() {
           <nav>
             <Navbar />
           </nav>
-          <div className="p-1">
+          <div className="p-2">
             <div className=" w-full flex-col  ">
               <div className="flex items-end space-x-2 ">
                 <div className=" bg-black shadow-lg  rounded-t-xl w-20 p-3 flex flex-row gap-3 ">
@@ -188,6 +222,8 @@ export default function Home() {
                   themeSelector={themeSelector}
                   loading={loading}
                   isFullscreen={isFullscreen}
+                  infoModal={infoModal}
+                  handleChangeTable={handleChangeTable}
                 />
               </div>
               <div className="flex flex-row">
@@ -205,7 +241,7 @@ export default function Home() {
                         <div className="w-12 h-12 rounded-full animate-spin border-8 border-solid border-cyan-500 border-t-transparent shadow-md"></div>
                       </div>
                     }
-                    value={file.value}
+                    defaultValue={file.value}
                     onMount={handleEditorDidMount}
                     onChange={() => {
                       showValue();
@@ -219,24 +255,46 @@ export default function Home() {
                   />
                   {/* Buttons */}
                 </div>
-                {!isFullscreen && <TableInfo dataname={fileName} />}
-                {Object.keys(files).map((name, index) => (
-                  <div
-                    className="text-white"
-                    key={index}
-                    onClick={() => changeFile(name)}
-                  >
-                    <button
-                      className={`bg-black shadow-lg font-bold text-white rounded-t-xl p-4 border dark:border-white ${
-                        name === fileName
-                          ? "border-b-4 border-cyan-500"
-                          : "font-bold text-white"
-                      }`}
+                {!isFullscreen ? (
+                  <TableInfo
+                    dataname={fileName}
+                    info={info}
+                    infoModal={infoModal}
+                  />
+                ) : (
+                  info && (
+                    <TableInfo
+                      dataname={fileName}
+                      info={info}
+                      infoModal={infoModal}
+                    />
+                  )
+                )}
+                {isFullscreen && selecttable && (
+                  <TableModal
+                    files={files}
+                    changeFile={changeFile}
+                    handleChangeTable={handleChangeTable}
+                    fileName={fileName}
+                  />
+                )}
+                {/* {!isFullscreen && <TableInfo dataname={fileName} />} */}
+                {!isFullscreen &&
+                  Object.keys(files).map((name, index) => (
+                    <div
+                      className="text-white"
+                      key={index}
+                      onClick={() => changeFile(name)}
                     >
-                      {name}
-                    </button>
-                  </div>
-                ))}
+                      <button
+                        className={`bg-black shadow-lg font-bold text-white rounded-t-xl p-4  ${
+                          name === fileName ? "border-b-4 border-blue-400" : ""
+                        }`}
+                      >
+                        {name}
+                      </button>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -252,6 +310,7 @@ export default function Home() {
               >
                 <li
                   onClick={() => {
+                    handleCopyClick();
                     handleCopyClick();
                   }}
                   className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -281,6 +340,7 @@ export default function Home() {
                 <li
                   onClick={() => {
                     handleCopyClick();
+                    handleCopyClick();
                   }}
                   className="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
@@ -307,6 +367,7 @@ export default function Home() {
                 ></div>
               </div>
             )}
+            <div className="p-1 text-white font-bold text-xl ">Output</div>
             {!loading && (
               <DynamicTable data={jsonData} onLoaded={handleTableLoaded} />
             )}

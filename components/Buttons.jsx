@@ -1,6 +1,8 @@
 import React from "react";
 import { FiMaximize2, FiMoon, FiMoreHorizontal } from "react-icons/fi";
+import { FaCircleInfo } from "react-icons/fa6";
 import { RiPlayFill } from "react-icons/ri";
+import { FaExchangeAlt } from "react-icons/fa";
 
 function Buttons({
   fullscreen,
@@ -9,6 +11,8 @@ function Buttons({
   handleDropDown,
   handleRunSql,
   loading,
+  infoModal,
+  handleChangeTable,
 }) {
   return (
     <>
@@ -49,11 +53,24 @@ function Buttons({
         </div>
       )}
       {isFullscreen && (
-        <div className={`flex pl-[1070px] flex-row gap-5 pb-2`}>
+        <div className={`flex pl-[950px] flex-row gap-5 pb-2`}>
+          <button
+            onClick={handleChangeTable}
+            className="dark:text-white text-black p-3  hover:text-gray-700 shadow-lg hover:shadow-cyan-500 hover:shadow-md border rounded-lg"
+          >
+            <FaExchangeAlt className="dark:text-white font-bold " />
+          </button>
           <button
             onClick={() => {
-              fullscreen();
+              infoModal();
             }}
+            className="dark:text-white text-black p-3  hover:text-gray-700 shadow-lg hover:shadow-cyan-500 hover:shadow-md border rounded-lg"
+          >
+            <FaCircleInfo className="dark:text-white font-bold " />
+          </button>
+
+          <button
+            onClick={fullscreen}
             className="dark:text-white text-black p-3  hover:text-gray-700 shadow-lg hover:shadow-cyan-500 hover:shadow-md border rounded-lg"
           >
             <FiMaximize2 className="dark:text-white font-bold " />

@@ -2,7 +2,7 @@ import { data } from "autoprefixer";
 import React from "react";
 import { FaTableColumns } from "react-icons/fa6";
 
-function TableInfo({ dataname }) {
+function TableInfo({ dataname, info, infoModal }) {
   const customers = [
     { columnName: "customerID", dataType: "VARCHAR(10)" },
     { columnName: "companyName", dataType: "VARCHAR(255)" },
@@ -52,22 +52,49 @@ function TableInfo({ dataname }) {
     heading = "Order Details";
   }
   return (
-    <div className="h-full bg-gray-400 dark:bg-gray-700 text-white p-3 shadow-2xl shadow-blue-950 rounded-2xl">
-      <div className="p-1 flex flex-row gap-2">
-        <FaTableColumns className="font-bold text-2xl text-white" />
-        <div className="text-lg font-bold"> {heading} [-]</div>
-      </div>
-      <ol className="relative border-s border-gray-200 dark:border-gray-700">
-        {data.map((customer, index) => (
-          <li key={index} className="mb-1 ms-4">
-            <div className="absolute w-3 h-3 bg-gray-200  rounded-full mt-1.5 -start-1.5 border border-white dark:border-white dark:bg-white"></div>
-            <time className="mb-1 text-sm leading-none text-black font-bold dark:text-white">
-              {customer.columnName} [{customer.dataType}]
-            </time>
-          </li>
-        ))}
-      </ol>
-    </div>
+    <>
+      {!info && (
+        <div className="h-full bg-gray-400 dark:bg-gray-700 text-white p-3 shadow-2xl shadow-blue-950 rounded-2xl">
+          <div className="p-1 flex flex-row gap-2">
+            <FaTableColumns className="font-bold text-2xl text-white" />
+            <div className="text-lg font-bold"> {heading} [-]</div>
+          </div>
+          <ol className="relative border-s border-gray-200 dark:border-gray-700">
+            {data.map((customer, index) => (
+              <li key={index} className="mb-1 ms-4">
+                <div className="absolute w-3 h-3 bg-gray-200  rounded-full mt-1.5 -start-1.5 border border-white dark:border-white dark:bg-white"></div>
+                <time className="mb-1 text-sm leading-none text-black font-bold dark:text-white">
+                  {customer.columnName} [{customer.dataType}]
+                </time>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+      {info && (
+        <div
+          onClick={infoModal}
+          className="    flex items-center justify-center absolute top-[200px]  left-[600px] "
+        >
+          <div className="h-full bg-gray-400 dark:bg-gray-700 text-white p-3 shadow-2xl shadow-blue-950 rounded-2xl">
+            <div className="p-1 flex flex-row gap-2">
+              <FaTableColumns className="font-bold text-2xl text-white" />
+              <div className="text-lg font-bold"> {heading} [-]</div>
+            </div>
+            <ol className="relative border-s border-gray-200 dark:border-gray-700">
+              {data.map((customer, index) => (
+                <li key={index} className="mb-1 ms-4">
+                  <div className="absolute w-3 h-3 bg-gray-200  rounded-full mt-1.5 -start-1.5 border border-white dark:border-white dark:bg-white"></div>
+                  <time className="mb-1 text-sm leading-none text-black font-bold dark:text-white">
+                    {customer.columnName} [{customer.dataType}]
+                  </time>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
