@@ -5,18 +5,15 @@ import { useRef, useState, useEffect } from "react";
 // import DynamicTable from "../components/DynamicTable";
 // import Buttons from "../components/Buttons";
 import React, { lazy, Suspense } from "react";
-import TableModal from "../components/TableModal";
+
+const TableModal = lazy(() => import("../components/TableModal"));
 const TableInfo = lazy(() => import("../components/TableInfo"));
 const DropDown = lazy(() => import("../components/DropDown"));
-
-// Lazy-loaded components
 const Editor = lazy(() => import("@monaco-editor/react"));
-
 const Navbar = lazy(() => import("../components/Navbar"));
 const LeftAlert = lazy(() => import("../components/LeftAlert"));
 const DynamicTable = lazy(() => import("../components/DynamicTable"));
 const Buttons = lazy(() => import("../components/Buttons"));
-
 export default function Home() {
   const editorRef = useRef(null);
   const [query, setQuery] = useState(null);
@@ -68,14 +65,10 @@ export default function Home() {
     setSelectTable(!selecttable);
   };
 
-  console.log(file);
-  console.log(fileName);
   const changeFile = (name) => {
-    console.log("name", name);
     setFileName(name);
-    console.log("filename---", files[name]);
     setFile(files[name]);
-    console.log(file.json, "json");
+
     tableChange(files[name].json);
   };
   const tableChange = async (change) => {
@@ -83,12 +76,12 @@ export default function Home() {
 
     await new Promise((resolve) => {
       setTimeout(() => {
-        console.log("f", change);
+        // console.log("f", change);
         setTable(change);
-        console.log("dev", change);
+        // console.log("dev", change);
         const newData = require("../Tables/" + change);
         setJsonData(newData);
-        console.log(newData);
+        // console.log(newData);
         resolve();
       }, 1000);
     });
@@ -96,7 +89,7 @@ export default function Home() {
     setLoading(false);
   };
   useEffect(() => {
-    console.log("f");
+    // console.log("f");
   }, [jsonData]);
 
   const infoModal = () => {
@@ -147,14 +140,14 @@ export default function Home() {
     showValue();
     setQuery(editorRef.current.getValue());
 
-    console.log(query);
+    // console.log(query);
     navigator.clipboard.writeText(editorRef.current.getValue());
-    console.log("Copy clicked");
+    // console.log("Copy clicked");
     // setCopyAlert(true);
     setTimeout(() => {
       setQuery(editorRef.current.getValue());
       navigator.clipboard.writeText(editorRef.current.getValue());
-      console.log("Copy clicked");
+      // console.log("Copy clicked");
     }, 100);
   };
   const handleClearAll = () => {
@@ -164,7 +157,7 @@ export default function Home() {
   function showValue() {
     if (!editorRef.current) {
       setQuery(editorRef?.current?.getValue());
-      console.log(query);
+      // console.log(query);
     }
   }
   // useEffect(() => {
@@ -179,15 +172,11 @@ export default function Home() {
   // });
   const [initialLoading, setInitialLoading] = useState(true);
 
-  // ... (other state variables)
-
   useEffect(() => {
-    // Simulate initial loading delay (you can replace this with your actual data fetching logic)
     const timeoutId = setTimeout(() => {
       setInitialLoading(false);
     }, 2000); // Adjust the timeout as needed
 
-    // Clean up the timeout if the component unmounts before the timeout finishes
     return () => clearTimeout(timeoutId);
   }, []);
 
